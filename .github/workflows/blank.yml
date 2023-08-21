@@ -1,0 +1,40 @@
+name: Code_signing
+
+# Controls when the workflow will run
+on: push  
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs: 
+  build: 
+    strategy: 
+      matrix: 
+
+        os: [ubuntu-latest, windows-latest] 
+
+    runs-on: ${{ matrix.os }} 
+    
+    steps: 
+      - name: Setup Certificate 
+        run: | 
+          echo "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > /d/Certificate_pkcs12.p12 
+        shell: bash 
+        
+      - name: Set variables 
+        id: variables 
+        run: | 
+          echo "::set-output name=version::${GITHUB_REF#refs/tags/v}" 
+          echo "SM_HOST=${{ secrets.SM_HOST }}" >> "$GITHUB_ENV" 
+          echo "SM_API_KEY=${{ secrets.SM_API_KEY }}" >> "$GITHUB_ENV" 
+          echo "SM_CLIENT_CERT_FILE=D:\\Certificate_pkcs12.p12" >> "$GITHUB_ENV" 
+          echo "SM_CLIENT_CERT_PASSWORD=${{ secrets.SM_CLIENT_CERT_PASSWORD }}" >> "$GITHUB_ENV" 
+          shell: bash     
+          
+      - name: Code signing with Secure Software Manager  
+        uses: digicert/ssm-code-signing@latest-version  
+
+    env: 
+      SM_API_KEY: ${{secrets.SM_API_KEY}}  
+      SM_CLIENT_CERT_PASSWORD: ${{secrets.SM_CLIENT_CERT_PASSWORD}}  
+      SM_CLIENT_CERT_FILE: ${{secrets.SM_CLIENT_CERT_FILE}} 
+
+
