@@ -18,7 +18,7 @@ jobs:
         - name: Check out Git repository
           uses: actions/checkout@v2
 
-         - name: Setup Certificate
+        - name: Setup Certificate
           run: |
             echo "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > /c/Certificate_pkcs12.p12
             cat /d/Certificate_pkcs12.p12
