@@ -4,7 +4,7 @@ name: Code_signing
 on:
   push:
     tags:
-      - 'v*'
+         - 'v*'
       
 jobs:
   release:
@@ -15,15 +15,14 @@ jobs:
         os: [windows-latest]
         
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v2
+        - name: Check out Git repository
+          uses: actions/checkout@v2
 
- 
-      - name: Setup Certificate
-        run: |
-          echo "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > /c/Certificate_pkcs12.p12
-          cat /d/Certificate_pkcs12.p12
-        shell: bash
+         - name: Setup Certificate
+          run: |
+            echo "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > /c/Certificate_pkcs12.p12
+            cat /d/Certificate_pkcs12.p12
+          shell: bash
 
           
         - name: Set variables
