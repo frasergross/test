@@ -1,0 +1,6 @@
+{
+  "error" : {
+    "status" : "wrong_token",
+    "message" : "Invalid JWT/S token."
+  }
+}
