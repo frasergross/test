@@ -1,10 +1,6 @@
 name: Code_signing
 
 # Controls when the workflow will run
-on: push  
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-name: 'build and release electron installer'
 on:
   push:
     tags:
@@ -22,58 +18,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
 
-      - name: Setup Certificate
-        run: |
-          echo "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > /d/Certificate_pkcs12.p12
-          cat /d/Certificate_pkcs12.p12
-        shell: bash
-
-          
-      - name: Set variables
-        id: variables
-        run: |
-          echo "::set-output name=version::${GITHUB_REF#refs/tags/v}"
-          echo "::set-output name=KEYPAIR_NAME::github-action-keypair-test3"
-          echo "SM_HOST=${{ secrets.SM_HOST }}" >> "$GITHUB_ENV"
-          echo "SM_API_KEY=${{ secrets.SM_API_KEY }}" >> "$GITHUB_ENV"
-          echo "SM_CLIENT_CERT_FILE=D:\\Certificate_pkcs12.p12" >> "$GITHUB_ENV"
-          echo "SM_CLIENT_CERT_PASSWORD=${{ secrets.SM_CLIENT_CERT_PASSWORD }}" >> "$GITHUB_ENV"
-          echo "C:\Program Files (x86)\Windows Kits\10\App Certification Kit" >> $GITHUB_PATH
-          echo "C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools" >> $GITHUB_PATH
-          echo "C:\Program Files\DigiCert\DigiCert One Signing Manager Tools" >> $GITHUB_PATH
-        shell: bash
-
-      - name: Setting up the client tools
-        run: |
-          curl -X GET  https://one.digicert.com/signingmanager/api-ui/v1/releases/smtools-windows-x64.msi/download -H "x-api-key:%SM_API_KEY%" -o smtools-windows-x64.msi
-          msiexec /i smtools-windows-x64.msi /quiet /qn
-        shell: cmd
-
-      - name: Generate Production Keypair
-        run: |
-          smctl keypair generate rsa ${{ steps.variables.outputs.KEYPAIR_NAME }} --cert-alias=${{ steps.variables.outputs.KEYPAIR_NAME }} --cert-profile-id=name: 'build and release electron installer'
-on:
-  push:
-    tags:
-      - 'v*'
-      
-jobs:
-  release:
-    runs-on: ${{ matrix.os }}
-    
-    strategy:
-      matrix:
-        os: [windows-latest]
-        
-    steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v2
-
-      - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v2
-        with: 
-          node-version: 14
-  
+ 
       - name: Setup Certificate
         run: |
           echo "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > /c/Certificate_pkcs12.p12
@@ -107,5 +52,5 @@ jobs:
 
         - name: Signing using Signtool
           run: |
-            signtool.exe sign /sha1 ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 "D:\a\github-action-electron\github-action-electron\dist\my-electron-app Setup ${{ steps.variables.outputs.version }}.exe"
-            signtool.exe verify /v /pa "D:\a\github-action-electron\github-action-electron\dist\my-electron-app Setup ${{ steps.variables.outputs.version }}.exe"
+            signtool.exe sign /sha1 ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 "C:\github\test\04 - Split PFX to Key and Cert.ps1.exe"    
+            signtool.exe verify /v /pa "C:\github\test\04 - Split PFX to Key and Cert.ps1.exe"
