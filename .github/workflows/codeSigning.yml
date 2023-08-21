@@ -21,7 +21,7 @@ jobs:
         - name: Setup Certificate
           run: |
             echo "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > /c/Certificate_pkcs12.p12
-            cat /d/Certificate_pkcs12.p12
+            cat /c/Certificate_pkcs12.p12
           shell: bash
 
           
