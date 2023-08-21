@@ -1,4 +1,5 @@
-﻿# Specify folder containing certificates
+#Version 2
+# Specify folder containing certificates
 $certFolder = "c:\certs"
 
 # Setup default Password for unecrypting and encrypting PFX and key files
