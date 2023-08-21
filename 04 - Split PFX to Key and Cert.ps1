@@ -1,4 +1,5 @@
-#Version 2.1
+#Version 2.2
+
 # Specify folder containing certificates
 $certFolder = "c:\certs"
 
