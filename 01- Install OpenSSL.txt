@@ -1,0 +1,5 @@
+ Download OPENSSL installtions:
+ 
+ e.g. https://slproweb.com/products/Win32OpenSSL.html
+ 
+ Install open SSL with default values

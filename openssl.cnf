@@ -1,0 +1,109 @@
+#
+# OpenSSL configuration file.  Used to generate the Certificate Signing
+# request for an End Entity certificate.  This file is specified by running:
+#
+#    "openssl req -config .\devices\csr_config.cfg -new ...."
+#
+
+# This definition stops the following lines choking if HOME isn't
+# defined.
+HOME			= C:/certs
+RANDFILE		= $HOME/file.rnd
+
+####################################################################
+
+[ req ]
+default_bits		= 3072
+default_keyfile 	= privkey.pem
+distinguished_name	= req_distinguished_name
+req_extensions 		= default_ReqExt # The extensions to add to a certificate request
+attributes			= req_attributes
+
+# Passwords for private keys if not present they will be prompted for
+# input_password = secret
+# output_password = secret
+
+# This sets a mask for permitted string types. There are several options. 
+# default: PrintableString, T61String, BMPString.
+# pkix	 : PrintableString, BMPString.
+# utf8only: only UTF8Strings.
+# nombstr : PrintableString, T61String (no BMPStrings or UTF8Strings).
+# MASK:XXXX a literal mask value.
+# WARNING: current versions of Netscape crash on BMPStrings or UTF8Strings
+# so use this option with caution!
+string_mask = nombstr
+
+####################################################################
+
+#----------------------------------------------------------------
+#  Subject (Distinguished Name) default settings for interactive
+#	definition of Subject Name
+#----------------------------------------------------------------
+
+[ req_distinguished_name ]
+#
+# Set defaults for subject name:
+#   CN=???, OU=Devices, OU=r, O=mil, C=gb
+#
+countryName			= Country Name (2 letter code)
+countryName_default		= gb
+countryName_min			= 2
+countryName_max			= 2
+
+0.organizationName		= Organisation Name (eg Company)
+0.organizationName_default	= Unisys
+
+0.organizationalUnitName		= Organisation Function (eg Finance, HR
+0.organizationalUnitName_default	= stealth
+
+commonName			= Common Name (e.g. server FQDN)
+commonName_max			= 64
+
+#
+# Set the following values to Empty values as they are not to be used
+#
+stateOrProvinceName_default	=
+localityName_default	=
+emailAddress_default	=
+
+#----------------------------------------------------------------
+
+[ req_attributes ]
+challengePassword		= A challenge password
+challengePassword_min		= 4
+challengePassword_max		= 20
+
+
+#----------------------------------------------------------------
+#  Request Extension Default settings
+#----------------------------------------------------------------
+[ default_ReqExt ]
+# Extensions to add to all certificate request
+
+basicConstraints = CA:FALSE
+
+## KEYUSAGE ##
+# keyUsage supported Values are:
+#
+#	    digitalSignature,nonRepudiation,keyEncipherment,
+#		dataEncipherment,keyAgreement,keyCertSign,
+#		cRLSign,encipherOnly,decipherOnly
+#
+#Example Usage:
+#
+#	keyUsage = digitalSignature, keyEncipherment
+
+keyUsage = digitalSignature, keyEncipherment
+
+## EXTENDED KEY USAGE ##
+#extendedKeyUsage supported Values are: 
+#
+#		serverAuth,clientAuth,codeSigning,
+#		emailProtection,timeStamping,msCodeInd,
+#		msCodeCom,msCTLSign,msSGC,msEFS,nsSGC
+#
+# Example Usage:
+#
+#	extendedKeyUsage = serverAuth, clientAuth
+
+extendedKeyUsage = serverAuth,clientAuth
