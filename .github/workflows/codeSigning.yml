@@ -18,6 +18,10 @@ jobs:
 
         - name: Check out Git repository
           uses: actions/checkout@v3.5.3
+          with:
+            sparse-checkout: |
+              *.ps1
+            sparse-checkout-cone-mode: false          
           
         - name: List Checkout
           run: |
