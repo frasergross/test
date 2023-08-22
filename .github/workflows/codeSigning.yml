@@ -4,7 +4,7 @@ name: Code_signing
 on:
   push:
     tags:
-         - 'v*'
+        - 'v*'
       
 jobs:
   release:
