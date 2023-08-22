@@ -57,7 +57,10 @@ jobs:
             smctl.exe keypair ls
             C:\Windows\System32\certutil.exe -csp "DigiCert Signing Manager KSP" -key -user
             smksp_cert_sync.exe
-            # Remove MSI from folder
+          shell: cmd
+          
+        - name:  Remove MSI from Folder
+          run: |
             dir
             del smtools-windows-x64.msi
             dir
