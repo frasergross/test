@@ -15,8 +15,19 @@ jobs:
         os: [windows-latest]
         
     steps:
+
+        - name: Ls Output
+          run: |
+            ls
+            dir
+          
         - name: Check out Git repository
           uses: actions/checkout@v2
+
+        - name: DIr Output
+          run: |
+            ls
+            dir          
 
         - name: Install Node.js, NPM and Yarn
           uses: actions/setup-node@v2
