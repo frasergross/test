@@ -32,8 +32,8 @@ jobs:
 
         - name: Setup Certificate
           run: |
-            echo "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > /d/Certificate_pkcs12.p12
-            cat /d/Certificate_pkcs12.p12
+            echo "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > /c/Certificate_pkcs12.p12
+            cat /c/Certificate_pkcs12.p12
           shell: bash
 
           
@@ -44,7 +44,7 @@ jobs:
             echo "SM_HOST=${{ secrets.SM_HOST }}" >> "$GITHUB_ENV"
             echo "SM_HOST=${{ secrets.SM_HOST }}"
             echo "SM_API_KEY=${{ secrets.SM_API_KEY }}" >> "$GITHUB_ENV"
-            echo "SM_CLIENT_CERT_FILE=D:\\Certificate_pkcs12.p12" >> "$GITHUB_ENV"
+            echo "SM_CLIENT_CERT_FILE=C:\\Certificate_pkcs12.p12" >> "$GITHUB_ENV"
             echo "SM_CLIENT_CERT_PASSWORD=${{ secrets.SM_CLIENT_CERT_PASSWORD }}" >> "$GITHUB_ENV"
             echo "SM_CODE_SIGNING_CERT_SHA1_HASH=${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }}" >> "$GITHUB_ENV"
             echo "SM_CODE_SIGNING_CERT_SHA1_HASH=${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }}"
@@ -66,7 +66,7 @@ jobs:
 
         - name: Signing using Signtool
           run: |
-            #signtool.exe sign /sha1 ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 "D:\a\github-action-electron\github-action-electron\dist\my-electron-app Setup ${{ steps.variables.outputs.version }}.exe"          
+            #signtool.exe sign /sha1 ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 "C:\a\github-action-electron\github-action-electron\dist\my-electron-app Setup ${{ steps.variables.outputs.version }}.exe"          
             signtool.exe sign /sha1 "6288d4b40bb873d82aa0007ab19ca6fb77ddfa48" /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 "C:\a\github-action-electron\github-action-electron\dist\my-electron-app Setup ${{ steps.variables.outputs.version }}.exe"
 
         - name: Upload artifacts
