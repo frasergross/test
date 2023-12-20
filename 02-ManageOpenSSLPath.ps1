@@ -90,7 +90,8 @@ Write-Host ("---------------")
 GET-PATH
 
 Write-Host
-Write-Host ("Adding new folder to path")ADD-PATH -AddedFolder 'C:\Program Files\OpenSSL-Win64\bin'
+Write-Host ("Adding new folder to path")
+ADD-PATH -AddedFolder 'C:\Program Files\OpenSSL-Win64\bin'
 
 
 #Write-Host
