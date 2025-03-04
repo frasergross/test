@@ -68,7 +68,7 @@ jobs:
 
         - name: Signing using Signtool
           run: |
-            smctl sign --keypair-alias=CoolCats-Prod_30Day --input="."
+            smctl sign --keypair-alias=CoolCats-Prod_01 --input="."
             #signtool.exe sign /sha1 ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 ".\\*.ps1"          
             #signtool.exe sign /sha1 "6288d4b40bb873d82aa0007ab19ca6fb77ddfa48" /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 "04 - Split PFX to Key and Cert.ps1"
             #smctl sign --fingerprint ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} --input .
