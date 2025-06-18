@@ -54,6 +54,10 @@ jobs:
             dir
           shell: cmd
 
+        - name: SMCTL Health check
+          run: |
+            smctl healthcheck
+
 
         - name: Signing using certificate fingerprint      
           run: |
