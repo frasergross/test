@@ -1,11 +1,10 @@
-name: Code_signing
-
-# Controls when the workflow will run
-on:
+name: codeSigning
+ 
+on: 
   push:
     tags:
         - 'v*'
-      
+ 
 jobs:
   release:
     runs-on: ${{ matrix.os }}
@@ -13,15 +12,14 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest]
-        
-    steps:
 
+    steps:
         - name: Check out Git repository
-          uses: actions/checkout@v3.5.3
-          with:
-            sparse-checkout: |
-              *.ps1
-            sparse-checkout-cone-mode: false          
+          uses: actions/checkout@v4 
+     
+        - name: Install DigiCert Client tools from Github Custom Actions marketplace
+          id: Digicert Code Signing Snippet
+          uses: digicert/ssm-code-signing@v1.0.1        
           
         - name: List Checkout
           run: |
@@ -48,17 +46,6 @@ jobs:
             echo "C:\Program Files\DigiCert\DigiCert One Signing Manager Tools" >> $GITHUB_PATH
           shell: bash
           
-          
-        - name: Setup client tools - SSM KSP on windows latest
-          run: |
-            curl -X GET  https://demo.one.digicert.com/signingmanager/api-ui/v1/releases/smtools-windows-x64.msi/download -H "x-api-key:%SM_API_KEY%" -o smtools-windows-x64.msi
-            msiexec /i smtools-windows-x64.msi /quiet /qn
-            smksp_registrar.exe list
-            smctl.exe keypair ls
-            C:\Windows\System32\certutil.exe -csp "DigiCert Signing Manager KSP" -key -user
-            smksp_cert_sync.exe
-          shell: cmd
-          
         - name:  Remove MSI from Folder
           run: |
             dir
@@ -66,9 +53,21 @@ jobs:
             dir
           shell: cmd
 
+
+        - name: Signing using certificate fingerprint      
+          run: |
+             smctl sign --fingerprint ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} --input "." --config-file path/to/pkcs11properties.cfg
+          shell: cmd
+
+      
+        - name: Signing using keypair alias
+          run: |
+             smctl sign --keypair-alias=CoolCats_Test_03 --input "." --config-file path/to/pkcs11properties.cfg
+          shell: cmd          
+
         - name: Signing using Signtool
           run: |
-            smctl sign --keypair-alias=CoolCats-Prod_01 --input="."
+            #smctl sign --keypair-alias=CoolCats-Prod_01 --input="."
             #signtool.exe sign /sha1 ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 ".\\*.ps1"          
             #signtool.exe sign /sha1 "6288d4b40bb873d82aa0007ab19ca6fb77ddfa48" /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 "04 - Split PFX to Key and Cert.ps1"
             #smctl sign --fingerprint ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} --input .
