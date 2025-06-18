@@ -63,7 +63,7 @@ jobs:
       
         - name: Signing using keypair alias
           run: |
-             smctl sign --keypair-alias=CoolCats_Test_03 --input "." --config-file path/to/pkcs11properties.cfg
+             smctl sign --keypair-alias CoolCats_Test_01 --input "." --config-file path/to/pkcs11properties.cfg
           shell: cmd          
 
         - name: Signing using Signtool
