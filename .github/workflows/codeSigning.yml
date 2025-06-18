@@ -61,14 +61,14 @@ jobs:
 
         - name: Signing using certificate fingerprint      
           run: |
-             smctl sign --fingerprint ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} --input "." --config-file path/to/pkcs11properties.cfg
+             #smctl sign --fingerprint ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} --input "." --config-file path/to/pkcs11properties.cfg
              smctl sign --fingerprint ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} --input "."
           shell: cmd
 
       
         - name: Signing using keypair alias
           run: |
-             smctl sign --keypair-alias CoolCats_Prod_01 --input "." --config-file path/to/pkcs11properties.cfg
+             #smctl sign --keypair-alias CoolCats_Prod_01 --input "." --config-file path/to/pkcs11properties.cfg
              smctl sign --keypair-alias CoolCats_Prod_01 --input "."
           shell: cmd          
 
@@ -77,7 +77,7 @@ jobs:
             smksp_cert_sync.exe
             #smctl sign --keypair-alias=CoolCats-Prod_01 --input="."
             #signtool.exe sign /sha1 ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 ".\\*.ps1"          
-            signtool.exe sign /sha1 "de5f87f11cb9f415e97144ab21918bd3c0152ef8" /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 "04 - Split PFX to Key and Cert.ps1"
+            signtool.exe sign /sha1 de5f87f11cb9f415e97144ab21918bd3c0152ef8 /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 "04 - Split PFX to Key and Cert.ps1"
             #smctl sign --fingerprint ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} --input .
 
 
